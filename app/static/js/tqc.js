@@ -3,17 +3,17 @@ let activeId = null;
 let selectedPrefixes = new Set(); // 沒勾選 => 不顯示任何題目
 
 // ---------- helpers ----------
-function matchPrefix(qid){
+function matchPrefix(qid) {
   if (selectedPrefixes.size === 0) return false; // ✅ 沒勾選：不顯示任何題
   const s = String(qid);
   return selectedPrefixes.has(Number(s[0]));
 }
 
-function initPrefixFilter(){
+function initPrefixFilter() {
   const grid = document.getElementById("catGrid");
   grid.innerHTML = "";
 
-  for(let n=1; n<=9; n++){
+  for (let n = 1; n <= 9; n++) {
     const label = document.createElement("label");
     label.className = "catItem";
     label.innerHTML = `
@@ -35,16 +35,16 @@ function initPrefixFilter(){
   }
 }
 
-function renderList(filterText=""){
+function renderList(filterText = "") {
   const list = document.getElementById("list");
   const hint = document.getElementById("listHint");
   list.innerHTML = "";
 
   // ✅ 沒勾選：顯示提示
-  if (selectedPrefixes.size === 0){
+  if (selectedPrefixes.size === 0) {
     if (hint) hint.style.display = "block";
     return;
-  }else{
+  } else {
     if (hint) hint.style.display = "none";
   }
 
@@ -65,11 +65,11 @@ function renderList(filterText=""){
     });
 }
 
-function ensureActiveVisible(){
+function ensureActiveVisible() {
   // ✅ 沒勾選：右側清空提示
-  if (selectedPrefixes.size === 0){
+  if (selectedPrefixes.size === 0) {
     activeId = null;
-    document.getElementById("rightTitle").textContent = "王大名請先勾選類別";
+    document.getElementById("rightTitle").textContent = "114111206 翁一 請先勾選類別";
     document.getElementById("rightHint").textContent = "勾選 1～9 類後才會顯示對應題目清單。";
     document.getElementById("formArea").innerHTML = "";
     document.getElementById("resultArea").innerHTML = "";
@@ -91,7 +91,7 @@ function ensureActiveVisible(){
   });
 
   // ✅ 有勾選但沒有符合：顯示空狀態
-  if (visible.length === 0){
+  if (visible.length === 0) {
     activeId = null;
     document.getElementById("rightTitle").textContent = "（沒有符合篩選的題目）";
     document.getElementById("rightHint").textContent = "請調整搜尋或勾選類別。";
@@ -107,7 +107,7 @@ function ensureActiveVisible(){
   }
 
   // ✅ 你要求：勾選後「不要自動載入第一題」，所以這裡只提示，不自動 load
-  if (!activeId || !visible.some(q => q.id === activeId)){
+  if (!activeId || !visible.some(q => q.id === activeId)) {
     activeId = null;
     document.getElementById("rightTitle").textContent = "請從左邊選擇題目";
     document.getElementById("rightHint").textContent = "已依類別篩選完成，請點選題目。";
@@ -122,11 +122,11 @@ function ensureActiveVisible(){
   }
 }
 
-function safeMeta(meta, name){
+function safeMeta(meta, name) {
   return (meta && meta[name]) ? meta[name] : {};
 }
 
-function buildForm(q){
+function buildForm(q) {
   const meta = q.input_meta || {};
   const inputs = q.inputs || [];
 
@@ -157,7 +157,7 @@ function buildForm(q){
     </div>
   `;
 
-  if (q.output_hint){
+  if (q.output_hint) {
     html += `<p class="muted" style="margin-top:10px">輸出提示：${q.output_hint}</p>`;
   }
 
@@ -169,25 +169,25 @@ function buildForm(q){
   document.getElementById("runBtn").addEventListener("click", runTQC);
 }
 
-function renderResult(d){
+function renderResult(d) {
   const resultArea = document.getElementById("resultArea");
   resultArea.innerHTML = "";
 
-  if (!d || d.ok === false){
+  if (!d || d.ok === false) {
     const msg = (d && d.error) ? d.error : "Unknown error";
     resultArea.innerHTML = `<div class="err">錯誤：${msg}</div>`;
     return;
   }
 
-  if (typeof d.output === "string"){
+  if (typeof d.output === "string") {
     resultArea.innerHTML = `<div class="ok">${d.output}</div>`;
     return;
   }
 
-  const ignore = new Set(["ok","qid"]);
+  const ignore = new Set(["ok", "qid"]);
   const keys = Object.keys(d).filter(k => !ignore.has(k));
 
-  if (keys.length === 0){
+  if (keys.length === 0) {
     resultArea.innerHTML = `<div class="ok">（沒有結果欄位）</div>`;
     return;
   }
@@ -206,7 +206,7 @@ function renderResult(d){
 }
 
 // ---------- API calls ----------
-async function loadQuestion(qid){
+async function loadQuestion(qid) {
   activeId = qid;
   renderList(document.getElementById("search").value);
 
@@ -216,7 +216,7 @@ async function loadQuestion(qid){
   const r = await fetch(`/api/question/${qid}`);
   const q = await r.json();
 
-  if(!q.ok){
+  if (!q.ok) {
     document.getElementById("rightTitle").textContent = `TQC ${qid}`;
     document.getElementById("rightHint").textContent = `錯誤：${q.error}`;
     document.getElementById("formArea").innerHTML = "";
@@ -239,7 +239,7 @@ async function loadQuestion(qid){
 
 }
 
-async function runTQC(){
+async function runTQC() {
   const formArea = document.getElementById("formArea");
   const qid = formArea.dataset.qid;
   const inputs = JSON.parse(formArea.dataset.inputs || "[]");
@@ -251,22 +251,22 @@ async function runTQC(){
 
   document.getElementById("callHint").textContent = "呼叫中…";
 
-  try{
+  try {
     const r = await fetch(`/api/tqc/${qid}`, {
-      method:"POST",
-      headers: {"Content-Type":"application/json"},
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
     const d = await r.json();
     document.getElementById("callHint").textContent = "";
     renderResult(d);
-  }catch(e){
+  } catch (e) {
     document.getElementById("callHint").textContent = "";
-    renderResult({ok:false, error:"網路或伺服器錯誤：" + e});
+    renderResult({ ok: false, error: "網路或伺服器錯誤：" + e });
   }
 }
 
-async function loadSourceCode(qid){
+async function loadSourceCode(qid) {
   const box = document.getElementById("codeBox");
   const title = document.getElementById("codeTitle");
   const codeEl = document.getElementById("codeContent");
@@ -278,21 +278,21 @@ async function loadSourceCode(qid){
   box.classList.add("collapsed");        // ✅ 預設收合
   if (toggleBtn) toggleBtn.textContent = "展開程式碼";
 
-  try{
+  try {
     const r = await fetch(`/api/source/${qid}`);
-    if(!r.ok){
+    if (!r.ok) {
       const msg = await r.text();
       codeEl.textContent = `（無法載入：${r.status}）\n${msg}`;
       return;
     }
     const code = await r.text();
     codeEl.textContent = code;
-  }catch(e){
+  } catch (e) {
     codeEl.textContent = `（網路或伺服器錯誤）\n${e}`;
   }
 }
 
-async function loadAnswerCode(qid){
+async function loadAnswerCode(qid) {
   const box = document.getElementById("answerBox");
   const title = document.getElementById("answerTitle");
   const codeEl = document.getElementById("answerContent");
@@ -306,9 +306,9 @@ async function loadAnswerCode(qid){
   if (toggleBtn) toggleBtn.textContent = "證照題庫解答";
 
 
-  try{
+  try {
     const r = await fetch(`/api/answer/${qid}`);
-    if(!r.ok){
+    if (!r.ok) {
       const msg = await r.text();
       codeEl.textContent = `（無法載入：${r.status}）\n${msg}`;
       return;
@@ -317,21 +317,21 @@ async function loadAnswerCode(qid){
 
     const code = await r.text();
     codeEl.textContent = code;
-  }catch(e){
+  } catch (e) {
     codeEl.textContent = `（網路或伺服器錯誤）\n${e}`;
   }
 }
 
 
 // ---------- codebox buttons ----------
-function toggleCode(){
+function toggleCode() {
   const box = document.getElementById("codeBox");
   const btn = document.getElementById("toggleBtn");
   const collapsed = box.classList.toggle("collapsed");
   btn.textContent = collapsed ? "展開程式碼" : "收合程式碼";
 }
 
-function toggleAnswer(){
+function toggleAnswer() {
   const box = document.getElementById("answerBox");
   const btn = document.getElementById("answerToggleBtn");
   const collapsed = box.classList.toggle("collapsed");
@@ -339,23 +339,23 @@ function toggleAnswer(){
 }
 
 
-function copyCode(){
+function copyCode() {
   const code = document.getElementById("codeContent").textContent || "";
-  navigator.clipboard.writeText(code).then(()=>{
+  navigator.clipboard.writeText(code).then(() => {
     const btn = document.getElementById("copyBtn");
     const old = btn.textContent;
     btn.textContent = "已複製";
-    setTimeout(()=> btn.textContent = old, 800);
+    setTimeout(() => btn.textContent = old, 800);
   });
 }
 
-function copyAnswer(){
+function copyAnswer() {
   const code = document.getElementById("answerContent").textContent || "";
-  navigator.clipboard.writeText(code).then(()=>{
+  navigator.clipboard.writeText(code).then(() => {
     const btn = document.getElementById("answerCopyBtn");
     const old = btn.textContent;
     btn.textContent = "已複製";
-    setTimeout(()=> btn.textContent = old, 800);
+    setTimeout(() => btn.textContent = old, 800);
   });
 }
 
@@ -381,7 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ensureActiveVisible();
     });
 
-  document.getElementById("search").addEventListener("input", (e)=>{
+  document.getElementById("search").addEventListener("input", (e) => {
     renderList(e.target.value);
     ensureActiveVisible();
   });

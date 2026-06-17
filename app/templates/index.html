@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
   <meta charset="UTF-8">
   <title>TQC+ Python 題庫系統</title>
@@ -10,70 +11,71 @@
 </head>
 
 <body>
-<div class="wrap">
-  <div class="layout">
+  <div class="wrap">
+    <div class="layout">
 
-    <!-- 左：題目清單 -->
-    <div class="card">
-      <h2>11433001題目清單</h2>
+      <!-- 左：題目清單 -->
+      <div class="card">
+        <h2>114111206 翁一 題目清單</h2>
 
-      <input id="search" class="search" placeholder="搜尋題號或標題，例如：106 / 圓形">
+        <input id="search" class="search" placeholder="搜尋題號或標題，例如：106 / 圓形">
 
-      <!-- ✅ 類別勾選 -->
-      <div class="cats">
-        <div class="catTitle">類別篩選（題號開頭，可複選）</div>
-        <div class="catGrid" id="catGrid"></div>
-      </div>
-
-      <div id="listHint" class="muted listHint" style="display:none;">
-        請先勾選上方類別（1～9）以顯示題目清單。
-      </div>
-
-      <div id="list" class="list"></div>
-
-      <p class="muted" style="margin-top:12px">
-        清單來源：<code>/api/questions</code>
-      </p>
-    </div>
-
-    <!-- 右：同頁作答 -->
-    <div class="card">
-      <h2 id="rightTitle">王大名請先勾選類別</h2>
-      <p id="rightHint" class="muted">勾選 1～9 類後才會顯示對應題目清單。</p>
-
-      <div id="formArea"></div>
-      <div id="resultArea"></div>
-
-      <!-- ✅ 顯示 API 程式碼（預設收合） -->
-      <div id="codeBox" class="codebox collapsed" style="display:none;">
-        <div class="codehead">
-          <span id="codeTitle">q106.py</span>
-          <div class="codeActions">
-            <button id="copyBtn" class="copyBtn" type="button">複製</button>
-            <button id="toggleBtn" class="copyBtn" type="button">展開程式碼</button>
-          </div>
+        <!-- ✅ 類別勾選 -->
+        <div class="cats">
+          <div class="catTitle">類別篩選（題號開頭，可複選）</div>
+          <div class="catGrid" id="catGrid"></div>
         </div>
-        <pre class="pre"><code id="codeContent"></code></pre>
-      </div>
 
-      <!-- ✅ 題庫解答區塊（預設收合） -->
-      <div id="answerBox" class="codebox collapsed" style="display:none;">
-        <div class="codehead">
-          <span id="answerTitle">PYA101.py</span>
-          <div class="codeActions">
-            <button id="answerCopyBtn" class="copyBtn" type="button">複製</button>
-            <button id="answerToggleBtn" class="copyBtn" type="button">證照題庫程式碼</button>
-          </div>
+        <div id="listHint" class="muted listHint" style="display:none;">
+          請先勾選上方類別（1～9）以顯示題目清單。
         </div>
-        <pre class="pre"><code id="answerContent"></code></pre>
-      </div>
-      
-    </div>
 
+        <div id="list" class="list"></div>
+
+        <p class="muted" style="margin-top:12px">
+          清單來源：<code>/api/questions</code>
+        </p>
+      </div>
+
+      <!-- 右：同頁作答 -->
+      <div class="card">
+        <h2 id="rightTitle">114111206 翁一 請先勾選類別</h2>
+        <p id="rightHint" class="muted">勾選 1～9 類後才會顯示對應題目清單。</p>
+
+        <div id="formArea"></div>
+        <div id="resultArea"></div>
+
+        <!-- ✅ 顯示 API 程式碼（預設收合） -->
+        <div id="codeBox" class="codebox collapsed" style="display:none;">
+          <div class="codehead">
+            <span id="codeTitle">q106.py</span>
+            <div class="codeActions">
+              <button id="copyBtn" class="copyBtn" type="button">複製</button>
+              <button id="toggleBtn" class="copyBtn" type="button">展開程式碼</button>
+            </div>
+          </div>
+          <pre class="pre"><code id="codeContent"></code></pre>
+        </div>
+
+        <!-- ✅ 題庫解答區塊（預設收合） -->
+        <div id="answerBox" class="codebox collapsed" style="display:none;">
+          <div class="codehead">
+            <span id="answerTitle">PYA101.py</span>
+            <div class="codeActions">
+              <button id="answerCopyBtn" class="copyBtn" type="button">複製</button>
+              <button id="answerToggleBtn" class="copyBtn" type="button">證照題庫程式碼</button>
+            </div>
+          </div>
+          <pre class="pre"><code id="answerContent"></code></pre>
+        </div>
+
+      </div>
+
+    </div>
   </div>
-</div>
 
-<!-- ✅ 外部 JS（建議 defer） -->
-<script src="/static/js/tqc.js" defer></script>
+  <!-- ✅ 外部 JS（建議 defer） -->
+  <script src="/static/js/tqc.js" defer></script>
 </body>
+
 </html>
