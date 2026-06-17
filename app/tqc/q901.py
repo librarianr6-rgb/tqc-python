@@ -27,5 +27,5 @@ def solve(data: dict) -> dict:
     f.close()
 
     return {
-        "output": ""
+        "output": "資料已儲存！"
     }
