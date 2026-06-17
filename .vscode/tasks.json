@@ -1,0 +1,72 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Setup venv + install requirements",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "if (!(Test-Path .venv)) { python -m venv .venv }; .\\.venv\\Scripts\\python.exe -m pip install -U pip; if (Test-Path requirements.txt) { .\\.venv\\Scripts\\python.exe -m pip install -r requirements.txt }"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Run FastAPI (uvicorn --reload)",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe",
+      "args": [
+        "-m",
+        "uvicorn",
+        "app.main:app",
+        "--reload"
+      ],
+      "isBackground": true,
+      "dependsOn": [
+        "Setup venv + install requirements"
+      ],
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "INFO:.*Will watch for changes|Started reloader process",
+            "endsPattern": "INFO:.*Uvicorn running on"
+          }
+        }
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Open FastAPI in Browser",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-Command",
+        "Start-Process http://127.0.0.1:8000"
+      ],
+      "dependsOn": [
+        "Run FastAPI (uvicorn --reload)"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,487 @@
+/* =========================================================
+   TQC 題庫系統 – tqc.css（去重/單一權威版）
+   ========================================================= */
+
+/* ---------- 全站基本 ---------- */
+:root{
+  --tqc-line-h: 1.6;
+  --tqc-lines: 12;
+  --tqc-row-border: 1px;
+  --tqc-pre-pad-y: 14px;
+}
+
+body{
+  font-family:"Microsoft JhengHei",system-ui;
+  margin:0;
+  background:#eef0f4;
+  color:#1f2937;
+}
+.wrap{
+  max-width:1200px;
+  margin:20px auto;
+  padding:0 16px;
+}
+.layout{
+  display:grid;
+  grid-template-columns: 320px 1fr;
+  gap:16px;
+  align-items:start;
+}
+@media(max-width: 980px){
+  .layout{ grid-template-columns:1fr; }
+}
+
+.card{
+  background:#f8f9fb;
+  border:1px solid #d6dae3;
+  border-radius:14px;
+  padding:16px;
+  box-shadow:0 4px 14px rgba(0,0,0,.06);
+}
+h1,h2,h3{ margin:0 0 10px; color:#111827; }
+.muted{ color:#6b7280; font-size:14px; }
+
+/* ---------- 左側清單 ---------- */
+.search{
+  width:100%;
+  box-sizing:border-box;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid #c7ccd6;
+  background:#f1f3f6;
+  margin:10px 0 12px;
+}
+
+/* 類別勾選 */
+.cats{
+  margin: 0 0 12px;
+  padding: 10px;
+  border:1px solid #d6dae3;
+  border-radius:12px;
+  background:#ffffff;
+}
+.catTitle{
+  font-weight:900;
+  font-size:14px;
+  color:#374151;
+  margin-bottom:8px;
+}
+.catGrid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap:8px;
+}
+.catItem{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  background:#f8f9fb;
+  cursor:pointer;
+  user-select:none;
+}
+.catItem:hover{ filter:brightness(.98); }
+.catItem input{ width:auto; }
+.catBadge{
+  font-weight:900;
+  font-size:13px;
+  padding:2px 8px;
+  border-radius:999px;
+  background:#e6e8f2;
+  color:#374151;
+}
+
+.listHint{ margin:6px 0 10px; }
+
+.list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  max-height: calc(100vh - 300px);
+  overflow:auto;
+  padding-right:4px;
+}
+.qitem{
+  background:#ffffff;
+  border:1px solid #d1d5db;
+  border-radius:12px;
+  padding:12px;
+  cursor:pointer;
+}
+.qitem:hover{ filter:brightness(.98); }
+.qitem.active{
+  border-color:#4f46e5;
+  box-shadow:0 0 0 3px rgba(79,70,229,.12);
+}
+.qtitle{ font-weight:800; }
+.qmeta{ margin-top:6px; font-size:13px; color:#6b7280; }
+
+/* ---------- 右側作答 ---------- */
+.grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap:16px;
+  margin-top:10px;
+}
+@media(max-width: 720px){
+  .grid{ grid-template-columns:1fr; }
+}
+.field.full{ grid-column:1 / -1; }
+
+label{
+  display:block;
+  font-weight:800;
+  font-size:14px;
+  margin-bottom:6px;
+  color:#374151;
+}
+.unit{
+  font-size:13px;
+  color:#6b7280;
+  font-weight:500;
+  margin-left:4px;
+}
+input{
+  width:100%;
+  box-sizing:border-box;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid #c7ccd6;
+  background:#f1f3f6;
+  color:#111827;
+}
+input:focus{
+  outline:none;
+  border-color:#6366f1;
+  background:#ffffff;
+}
+
+.row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:14px; }
+.btn{
+  padding:10px 16px;
+  border-radius:10px;
+  border:0;
+  background:#4f46e5;
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-block;
+}
+.btn:hover{ filter:brightness(.95); }
+
+.ok{
+  background:#e6e8f2;
+  border-radius:10px;
+  padding:12px 14px;
+  white-space:pre-wrap;
+  margin-top:10px;
+}
+.err{
+  background:#fbeaea;
+  border:1px solid #f3b4b4;
+  color:#7f1d1d;
+  border-radius:10px;
+  padding:12px 14px;
+  white-space:pre-wrap;
+  margin-top:10px;
+}
+table{ width:100%; border-collapse:collapse; margin-top:10px; }
+th,td{ padding:10px; border-bottom:1px solid #d1d5db; text-align:left; }
+th{ background:#e5e7eb; color:#374151; }
+code{
+  background:#e5e7eb;
+  padding:2px 6px;
+  border-radius:6px;
+  font-size:13px;
+}
+
+/* =========================================================
+   程式碼區塊（codebox + pre）
+   ========================================================= */
+.codebox{
+  margin-top:12px;
+  border:1px solid #d6dae3;
+  border-radius:12px;
+  background:#ffffff;
+  overflow:hidden;
+}
+.codehead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 12px;
+  border-bottom:1px solid #e5e7eb;
+  background:#f8f9fb;
+  font-size:13px;
+  color:#374151;
+  font-weight:900;
+}
+#codeBox { display:block; } /* JS 會控制 style=block/none，這行保險 */
+
+.codeActions{ display:flex; gap:8px; }
+.copyBtn{
+  padding:6px 10px;
+  border-radius:8px;
+  border:1px solid #c7ccd6;
+  background:#ffffff;
+  cursor:pointer;
+  font-weight:800;
+  font-size:12px;
+}
+.copyBtn:hover{ filter:brightness(.98); }
+
+/* ✅ 單一權威 .pre（深色 + 12行限制 + 可捲動） */
+.pre{
+  margin:0;
+  padding: var(--tqc-pre-pad-y) 14px;
+  border-radius:12px;
+  background:#0d1117;        /* GitHub Dark */
+  color:#e5e7eb;
+  font-size:14px;
+  line-height: var(--tqc-line-h);
+
+  /* 12 行高度（考量每列分隔線） */
+  max-height: calc(
+    (var(--tqc-lines) * (var(--tqc-line-h) * 1em + var(--tqc-row-border)))
+    + (var(--tqc-pre-pad-y) * 2)
+  );
+  overflow-x:auto;
+  overflow-y:auto;
+}
+
+/* code 區內原生 code 樣式 */
+.pre code{
+  background:transparent;
+  padding:0;
+  border-radius:0;
+  color:inherit;
+  white-space:pre;
+  font-family: Consolas, Monaco, "Courier New", monospace;
+}
+
+/* 收合狀態：整個 pre 隱藏 */
+.codebox.collapsed .pre{ display:none; }
+
+/* =========================================================
+   highlight.js line-numbers（不用另外載 CSS）
+   ========================================================= */
+.hljs-ln{
+  width:100%;
+  border-collapse: collapse;
+}
+.hljs-ln tr{
+  border-bottom: var(--tqc-row-border) solid rgba(255,255,255,.12);
+}
+.hljs-ln td{ padding:0; vertical-align:top; }
+
+.hljs-ln-numbers{
+  text-align:right;
+  color: rgba(255,255,255,.35);
+  border-right: 1px solid rgba(255,255,255,.12);
+  padding-right:12px !important;
+  user-select:none;
+  cursor:pointer;
+  width:42px;
+}
+.hljs-ln-code{
+  padding-left:12px !important;
+}
+
+/* --- Code/Explain linking UX --- */
+.hljs-ln tr.active-line td.hljs-ln-code{
+  background: rgba(255, 255, 255, 0.08);
+  outline: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+}
+
+/* =========================================================
+   逐行解釋 explainbox（12 行限制）
+   ========================================================= */
+.explainbox{
+  margin-top:12px;
+  padding:12px 14px;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  background:#fafafa;
+  white-space: normal;
+
+  line-height: var(--tqc-line-h);
+  max-height: calc(var(--tqc-lines) * var(--tqc-line-h) * 1em);
+  overflow-y:auto;
+  padding-right:6px; /* 避免捲軸吃字 */
+}
+.explainbox .muted{ color:#6b7280; }
+.explainbox li{ cursor:pointer; }
+
+.explainbox .active-explain{
+  background: rgba(0, 120, 255, 0.08);
+  border-left: 4px solid rgba(0, 120, 255, 0.65);
+  padding-left: 10px;
+  border-radius: 8px;
+}
+
+/* tooltip */
+#lnTooltip{
+  position: fixed;
+  z-index: 9999;
+  max-width: 380px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.35;
+  background: rgba(10, 15, 25, 0.92);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  display: none;
+  pointer-events: none;
+  white-space: normal;
+}
+
+/* =========================================================
+   ChatGPT 等待 Overlay（Spinner + 秒數 + 階段）— 單一版本
+   ========================================================= */
+.wait-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.wait-box{
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 26px 34px;
+  width: min(420px, calc(100vw - 32px));
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0,0,0,.25);
+  border: 1px solid rgba(0,0,0,.06);
+}
+
+.wait-title{
+  font-size: 18px;
+  font-weight: 900;
+  margin-bottom: 14px;
+  color: #111827;
+}
+
+.wait-spinner-wrap{
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 12px;
+  display: grid;
+  place-items: center;
+}
+
+.wait-spinner{
+  width: 110px;
+  height: 110px;
+  border-radius: 999px;
+  border: 10px solid rgba(79,70,229,.16);
+  border-top-color: rgba(79,70,229,1);
+  animation: waitSpin 0.95s linear infinite;
+}
+
+@keyframes waitSpin{
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.wait-seconds{
+  position: absolute;
+  font-size: 30px;
+  font-weight: 900;
+  color: #4f46e5;
+  letter-spacing: .5px;
+}
+
+.wait-stage{
+  margin-top: 6px;
+  font-size: 14px;
+  color: #374151;
+}
+
+.wait-stage-label{
+  font-weight: 800;
+  color: #111827;
+  margin-right: 4px;
+}
+
+#waitStageText{
+  font-weight: 900;
+  color: #4f46e5;
+}
+
+.wait-longhint{
+  margin-top: 12px;
+  font-size: 13px;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+/* ===============================
+   表單輸入區：最多 5 欄
+   =============================== */
+
+/* ✅ 桌機：5 欄（每個 input <= 20%） */
+.grid{
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px 12px;        /* 行距 / 欄距，維持緊湊 */
+  margin-top: 8px;       /* 減少上方空白 */
+}
+
+/* ❌ 取消 JS 自動加的 full 跨欄行為 */
+.field.full{
+  grid-column: auto !important;
+}
+
+/* ✅ 中螢幕：3 欄 */
+@media (max-width: 1200px){
+  .grid{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ✅ 平板：2 欄 */
+@media (max-width: 980px){
+  .grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ✅ 手機：1 欄 */
+@media (max-width: 640px){
+  .grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 讓上半部更省空間 */
+label{
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+input{
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+
+.row{
+  margin-top: 10px;
+  gap: 8px;
+}
+
+.grid:has(.field:only-child){
+  justify-content: center;
+}
